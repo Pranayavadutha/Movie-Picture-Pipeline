@@ -1,3 +1,4 @@
+// CI test
 import React, { useState } from 'react';
 import MovieList from './components/MovieList';
 import MovieDetails from './components/MovieDetails';
