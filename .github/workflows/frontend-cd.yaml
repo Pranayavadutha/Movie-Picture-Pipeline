@@ -90,8 +90,23 @@ jobs:
       - name: Get backend URL
         id: backend
         run: |
-          BACKEND_URL=$(kubectl get service backend -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
-          echo "url=http://${BACKEND_URL}" >> "$GITHUB_OUTPUT"
+          echo "Waiting for backend LoadBalancer..."
+
+          for i in {1..30}; do
+            BACKEND_URL=$(kubectl get service backend -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' 2>/dev/null || true)
+
+            if [ -n "$BACKEND_URL" ]; then
+              echo "Backend URL: http://$BACKEND_URL"
+              echo "url=http://$BACKEND_URL" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+
+            echo "Backend LoadBalancer is not ready yet. Waiting..."
+            sleep 10
+          done
+
+          echo "Backend LoadBalancer did not become ready."
+          exit 1
 
       - name: Login to Amazon ECR
         id: ecr-login
