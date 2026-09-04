@@ -1,0 +1,8 @@
+Repository:
+Pranayavadutha/Movie-Picture-Pipeline
+
+Working frontend URL:
+http://a07c97915225b48fabda705cd3214745-1576579981.us-east-1.elb.amazonaws.com
+
+Working backend URL:
+http://a2efd36abcdf24b9383264e2dd5d4061-450165437.us-east-1.elb.amazonaws.com/movies
